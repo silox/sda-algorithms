@@ -3,7 +3,17 @@
 # Ocakavana casova zlozitost je linearna - O(n).
 
 def bin_search_2d(array, elem):
-    pass
+    x = len(array) - 1
+    y = 0
+    while x >= 0 and y < len(array):
+        if array[x][y] == elem:
+            return x, y
+        elif array[x][y] > elem:
+            x -= 1
+        elif array[x][y] < elem:
+            y += 1
+
+    return None
 
 
 if __name__ == "__main__":
