@@ -124,6 +124,7 @@ if __name__ == "__main__":
     ll.delete(0)
     ll.delete(1)
     ll.delete(len(ll) - 1)
+    print(ll)
     ll.insert(42, 0)
     ll.insert(11, 4)
     print(ll)
