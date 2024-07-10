@@ -68,7 +68,7 @@ class FileSystem:
         Vstupi do adresara specifikovany cestou `path`. Ak cesta zacina znakom '/', cesta je
         absolutna, v opacnom pripade relativna. Rozdiel medzi nimi je vysvetleny napriklad
         v tomto kratkom texte https://www.otrekal.info/linux/cesty-v-linuxe/. Su tam vysvetlene aj
-        priecinky '.' a '..', ktore som spominal aj na kruzku.
+        priecinky '.' a '..'
         Mozete ocakavat korektnu path.
         """
         if path.startswith('/'):
