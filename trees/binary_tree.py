@@ -22,6 +22,9 @@ class BinaryTree:
     def __str__(self):
         return str(self.root)
 
+    def __len__(self):
+        return self.count
+
     def __contains__(self, x):
         return x in (node.data for node in self)
         # Alternative
@@ -60,6 +63,7 @@ class BinaryTree:
             last.left = Node(x)
         else:
             last.right = Node(x)
+        self.count += 1
 
     @staticmethod
     def __preorder_rec(node):
@@ -197,6 +201,7 @@ if __name__ == "__main__":
     print('sum', tree.sum())
     print('max', tree.max())
     print('min', tree.min())
+    print('len', len(tree))
     print('height', tree.height())
     print('width', tree.width())
     print('width_rec', tree.width_rec())
