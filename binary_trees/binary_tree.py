@@ -54,11 +54,40 @@ class BinaryTree:
         self.__preorder_rec(self.root)
         print()
 
+    @staticmethod
+    def __inorder_rec(node):
+        if node is None:
+            return
+
+        BinaryTree.__inorder_rec(node.left)
+        print(node.data, end=' ')
+        BinaryTree.__inorder_rec(node.right)
+
     def inorder(self):
-        pass
+        self.__inorder_rec(self.root)
+        print()
+
+    @staticmethod
+    def __postorder_rec(node):
+        if node is None:
+            return
+
+        BinaryTree.__postorder_rec(node.left)
+        BinaryTree.__postorder_rec(node.right)
+        print(node.data, end=' ')
 
     def postorder(self):
-        pass
+        self.__postorder_rec(self.root)
+        print()
+
+    @staticmethod
+    def __sum_rec(node):
+        if node is None:
+            return 0
+        return node.data + BinaryTree.__sum_rec(node.left) + BinaryTree.__sum_rec(node.right)
+
+    def sum(self):
+        return self.__sum_rec(self.root)
 
 
 def generate_random_tree(n):
@@ -73,3 +102,6 @@ if __name__ == "__main__":
     tree = generate_random_tree(10)
     print(tree)
     tree.preorder()
+    tree.inorder()
+    tree.postorder()
+    print(tree.sum())
