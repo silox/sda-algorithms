@@ -85,19 +85,42 @@ class DoublyLinkedList:
 
         self.count += 1
 
+    def __iter_elements(self):
+        if self.head is None:
+            return
+
+        temp = self.head
+        while temp is not None:
+            yield temp.data
+            temp = temp.next
+
     def sum(self):
-        pass  # TODO
+        if self.head is None:
+            return 0
+
+        return sum(self.__iter_elements())
 
     def max(self):
-        pass  # TODO
+        if self.head is None:
+            raise ValueError('Linked list is empty')
+
+        return max(self.__iter_elements())
 
     def min(self):
-        pass  # TODO
+        if self.head is None:
+            raise ValueError('Linked list is empty')
+
+        return min(self.__iter_elements())
 
 
 if __name__ == "__main__":
     array = list(range(5))
     dll = DoublyLinkedList(array)
+    print('sum', dll.sum())
+    print('max', dll.max())
+    print('min', dll.min())
+    print()
+
     print(dll, len(dll))
     dll.pushright(10)
     print(dll, len(dll))
