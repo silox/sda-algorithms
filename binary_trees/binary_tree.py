@@ -81,26 +81,82 @@ class BinaryTree:
         print()
 
     @staticmethod
-    def __sum_rec(node):
+    def __iter_tree_rec(node):
         if node is None:
-            return 0
-        return node.data + BinaryTree.__sum_rec(node.left) + BinaryTree.__sum_rec(node.right)
+            return
+
+        yield node.data
+        yield from BinaryTree.__iter_tree_rec(node.left)
+        yield from BinaryTree.__iter_tree_rec(node.right)
+
+    def __iter__(self):
+        return self.__iter_tree_rec(self.root)
 
     def sum(self):
-        return self.__sum_rec(self.root)
+        if self.root is None:
+            return 0
+        return sum(self)
 
     def max(self):
-        pass
+        if self.root is None:
+            raise ValueError('Tree is empty')
+        return max(self)
 
     def min(self):
-        pass
+        if self.root is None:
+            raise ValueError('Tree is empty')
+        return min(self)
+
+    @staticmethod
+    def __height_rec(node):
+        if node is None:
+            return 0
+
+        return 1 + max(BinaryTree.__height_rec(node.left), BinaryTree.__height_rec(node.right))
 
     def height(self):
-        # vrati hlbku stromu
-        pass
+        if self.root is None:
+            return 0
+        return self.__height_rec(self.root) - 1
 
     def width(self):
-        # vrati sirku stromu
+        if self.root is None:
+            return 0
+
+        left = right = self.root
+        left_count = right_count = 0
+        while left.left is not None:
+            left = left.left
+            left_count += 1
+
+        while right.right is not None:
+            right = right.right
+            right_count += 1
+
+        return left_count + right_count
+
+    @staticmethod
+    def __width_rec_oneway(node, direction):
+        if node is None:
+            return -1
+
+        return 1 + BinaryTree.__width_rec_oneway(node.left if direction == 'left' else node.right, direction)
+        # Alternativa
+        # return 1 + BinaryTree.__width_rec_oneway(getattr(node, direction), direction)
+
+    def width_rec(self):
+        if self.root is None:
+            return 0
+
+        return self.__width_rec_oneway(self.root, 'left') + self.__width_rec_oneway(self.root, 'right')
+
+    def contains(self, x):
+        pass
+
+    def get_leaves(self):
+        pass
+
+    def find_parent(self, x):
         pass
 
 
@@ -113,9 +169,18 @@ def generate_random_tree(n):
 
 
 if __name__ == "__main__":
-    tree = generate_random_tree(10)
+    tree = generate_random_tree(20)
     print(tree)
     tree.preorder()
     tree.inorder()
     tree.postorder()
-    print(tree.sum())
+    print()
+    print('sum', tree.sum())
+    print('max', tree.max())
+    print('min', tree.min())
+    print('height', tree.height())
+    print('width', tree.width())
+    print('width_rec', tree.width_rec())
+
+    for data in tree:
+        print(data)
