@@ -5,7 +5,16 @@ from binary_tree import BinaryTree, Node
 
 class BinarySearchTree(BinaryTree):
     def __contains__(self, x):
-        pass
+        node = self.root
+        while node is not None:
+            if node.data == x:
+                return True
+            if x < node.data:
+                node = node.left
+            else:
+                node = node.right
+
+        return False
 
     def add(self, x):
         if self.root is None:
