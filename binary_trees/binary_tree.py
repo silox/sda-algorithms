@@ -10,6 +10,9 @@ class Node:
     def __str__(self):
         return f'Node({self.data}, {self.left}, {self.right})'
 
+    def is_leaf(self):
+        return self.left is None and self.right is None
+
 
 class BinaryTree:
     def __init__(self):
@@ -18,6 +21,23 @@ class BinaryTree:
 
     def __str__(self):
         return str(self.root)
+
+    def __contains__(self, x):
+        return x in (node.data for node in self)
+        # Alternative
+        # return x in map(lambda node: node.data, self)
+
+    def __iter__(self):
+        return self.__iter_tree_rec(self.root)
+
+    @staticmethod
+    def __iter_tree_rec(node):
+        if node is None:
+            return
+
+        yield node
+        yield from BinaryTree.__iter_tree_rec(node.left)
+        yield from BinaryTree.__iter_tree_rec(node.right)
 
     def add(self, x):
         if self.root is None:
@@ -80,32 +100,22 @@ class BinaryTree:
         self.__postorder_rec(self.root)
         print()
 
-    @staticmethod
-    def __iter_tree_rec(node):
-        if node is None:
-            return
-
-        yield node.data
-        yield from BinaryTree.__iter_tree_rec(node.left)
-        yield from BinaryTree.__iter_tree_rec(node.right)
-
-    def __iter__(self):
-        return self.__iter_tree_rec(self.root)
-
     def sum(self):
         if self.root is None:
             return 0
-        return sum(self)
+        return sum(node.data for node in self)
 
     def max(self):
         if self.root is None:
             raise ValueError('Tree is empty')
-        return max(self)
+        return max(node.data for node in self)
 
     def min(self):
         if self.root is None:
             raise ValueError('Tree is empty')
-        return min(self)
+        return min(node.data for node in self)
+        # Alternative
+        # return min(self, key=lambda x: x.data).data
 
     @staticmethod
     def __height_rec(node):
@@ -150,14 +160,23 @@ class BinaryTree:
 
         return self.__width_rec_oneway(self.root, 'left') + self.__width_rec_oneway(self.root, 'right')
 
-    def contains(self, x):
-        pass
-
     def get_leaves(self):
-        pass
+        return [node.data for node in self if node.is_leaf()]
 
     def find_parent(self, x):
-        pass
+        return self.find_parent_rec(self.root, x)
+
+    def find_parent_rec(self, node, value):
+        if node is None:
+            return None
+
+        if node.left is not None and node.left.data == value or node.right is not None and node.right.data == value:
+            return node.data
+
+        left_subtree = self.find_parent_rec(node.left, value)
+        right_subtree = self.find_parent_rec(node.right, value)
+
+        return left_subtree if left_subtree is not None else right_subtree
 
 
 def generate_random_tree(n):
@@ -182,5 +201,9 @@ if __name__ == "__main__":
     print('width', tree.width())
     print('width_rec', tree.width_rec())
 
-    for data in tree:
-        print(data)
+    print(3 in tree)
+    print('parent of 2 is', tree.find_parent(2))
+    print(tree.get_leaves())
+
+    # for data in tree:
+    #     print(data)
