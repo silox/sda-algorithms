@@ -89,6 +89,20 @@ class BinaryTree:
     def sum(self):
         return self.__sum_rec(self.root)
 
+    def max(self):
+        pass
+
+    def min(self):
+        pass
+
+    def height(self):
+        # vrati hlbku stromu
+        pass
+
+    def width(self):
+        # vrati sirku stromu
+        pass
+
 
 def generate_random_tree(n):
     tree = BinaryTree()
