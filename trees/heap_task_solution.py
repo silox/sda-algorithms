@@ -3,6 +3,7 @@ import heapq
 
 # Napis funkciu `find_k_smallest(array, k)`, ktora vrati zoznam `k` najmensich hodnot v zozname.
 def find_k_smallest(array, k):
+    assert 0 <= k <= len(array)
     array = array[:]
     heapq.heapify(array)
     result = []
@@ -12,6 +13,7 @@ def find_k_smallest(array, k):
 
 
 def find_k_smallest_alternative(array, k):
+    assert 0 <= k <= len(array)
     return heapq.nsmallest(k, array)
 
 
@@ -22,6 +24,8 @@ if __name__ == '__main__':
     print(find_k_smallest(array1, 3))
     print(find_k_smallest(array2, 3))
     print(find_k_smallest(array3, 3))
+    # print(find_k_smallest(array1, 10))  # Assertion Error
 
     print(find_k_smallest_alternative(array3, 5))
     print(array3)
+    print(array1)
